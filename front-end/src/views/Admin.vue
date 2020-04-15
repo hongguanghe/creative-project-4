@@ -1,19 +1,19 @@
 <template>
 <div class="allContent">
-  <h1>Post and Manage Comments</h1>
+  <h1>Add and Manage Books</h1>
   <div class="info">
     <div class="first">
       <div class="heading">
         <div class="circle">1</div>
-        <h2>Post a Comment</h2>
+        <h2>Add a Book</h2>
       </div>
       <div class="add">
         <div class="form">
           <input v-model="title" placeholder="Title">
           <p></p>
-          <input v-model="author" placeholder="Your Name">
+          <input v-model="author" placeholder="Author">
           <p></p>
-          <textarea v-model="description" name="name" rows="4" cols="40" placeholder="Enter Your Comment"></textarea>
+          <textarea v-model="description" name="name" rows="4" cols="40" placeholder="Enter Description"></textarea>
           <p></p>
           <input type="file" name="photo" @change="fileChanged">
           <button @click="upload" id="submit-button">Submit</button>
@@ -28,11 +28,11 @@
     <div class="second">
       <div class="heading">
       <div class="circle">2</div>
-      <h2>Edit/Delete an Item</h2>
+      <h2>Edit/Delete a Book</h2>
       </div>
       <div class="edit">
         <div class="form">
-          <input v-model="findTitle" placeholder="Search by Author" id="searchBox">
+          <input v-model="findTitle" placeholder="Search by Name" id="searchBox">
           <div class="suggestions" v-if="suggestions.length > 0">
             <div class="suggestion" v-for="s in suggestions" :key="s.id" @click="selectItem(s)">{{s.title}}
             </div>
@@ -40,20 +40,19 @@
         </div>
         <div class="edit-elements" v-if="findItem">
           <div class="col1">
-            <input v-model="findItem.title" placeholder="Edited Title">
+            <input v-model="findItem.title" placeholder="Edited Name">
             <p></p>
-            <input v-model="author" placeholder="Edited Name">
+            <input v-model="findItem.author" placeholder="Edited Author">
             <p></p>
-            <textarea name="name" rows="4" cols="40" placeholder="Edited Comment" v-model="findItem.description"></textarea>
+            <textarea name="name" rows="4" cols="40" placeholder="Edited Description" v-model="findItem.description"></textarea>
             <div class="col2">
-              <img :src="findItem.path" />
+              <img :src="findItem.path" id="picInfo"/>
             </div>
             <div class="actions" v-if="findItem">
               <button @click="editItem(findItem)" id="editButton">Edit</button>
               <button @click="deleteItem(findItem)">Delete</button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -163,6 +162,11 @@ export default {
 </script>
 
 <style scoped>
+.picInfo{
+  height:250px;
+  margin-top:10px;
+}
+
 .image h2 {
   font-style: italic;
   font-size: 1em;

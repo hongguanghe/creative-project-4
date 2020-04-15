@@ -10,13 +10,13 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <div class="text-link"><router-link to="/">Browse Comments</router-link></div>
+                <div class="text-link"><router-link to="/">Browse Books</router-link></div>
               </li>
               <li class="nav-item">
-                <div class="navbar-brand text-link"><router-link to="/">HH Comments</router-link></div>
+                <div class="navbar-brand text-link"><router-link to="/">Books Database</router-link></div>
               </li>
               <li class="nav-item">
-                <div class="text-link"><router-link to="/admin">Post Comments</router-link></div>
+                <div class="text-link"><router-link to="/admin">Manage Books</router-link></div>
               </li>
             </ul>
           </div>

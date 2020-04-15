@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1 id="pageTitle">Books Catalog</h1>
     <section class="image-gallery">
       <ul class="list-comments">
         <li class="each-comments" v-for="item in items" :key="item.id">
@@ -51,6 +52,13 @@ export default {
 </script>
 
 <style scoped>
+
+#pageTitle{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+}
 
 .list-comments{
   list-style: none;
@@ -109,8 +117,7 @@ export default {
 
 
 #pic{
-  width: 200px;
-  height: 200px;
+  height: 250px;
 }
 
 .text-info{
