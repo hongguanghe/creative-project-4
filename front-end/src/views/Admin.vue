@@ -1,57 +1,66 @@
 <template>
-<div class="info">
-  <h1>The Admin Page!</h1>
-  <div class="heading">
-    <div class="circle">1</div>
-    <h2>Add an Item</h2>
-  </div>
-  <div class="add">
-    <div class="form">
-      <input v-model="title" placeholder="Title">
-      <p></p>
-      <textarea v-model="description" name="name" rows="4" cols="40" placeholder="Item Description"></textarea>
-      <p></p>
-      <input type="file" name="photo" @change="fileChanged">
-      <button @click="upload">Upload</button>
+<div class="allContent">
+  <h1>Post and Manage Comments</h1>
+  <div class="info">
+    <div class="first">
+      <div class="heading">
+        <div class="circle">1</div>
+        <h2>Post a Comment</h2>
+      </div>
+      <div class="add">
+        <div class="form">
+          <input v-model="title" placeholder="Title">
+          <p></p>
+          <input v-model="author" placeholder="Your Name">
+          <p></p>
+          <textarea v-model="description" name="name" rows="4" cols="40" placeholder="Enter Your Comment"></textarea>
+          <p></p>
+          <input type="file" name="photo" @change="fileChanged">
+          <button @click="upload" id="submit-button">Submit</button>
+        </div>
+        <div class="upload" v-if="addItem">
+          <h2>{{addItem.title}}</h2>
+          <h5>{{addItem.description}}</h5>
+          <img :src="addItem.path" />
+        </div>
+      </div>
     </div>
-    <div class="upload" v-if="addItem">
-      <h2>{{addItem.title}}</h2>
-      <h5>{{addItem.description}}</h5>
-      <img :src="addItem.path" />
-    </div>
-  </div>
-  <div class="heading">
-  <div class="circle">2</div>
-  <h2>Edit/Delete an Item</h2>
-</div>
-<div class="edit">
-  <div class="form">
-    <input v-model="findTitle" placeholder="Search">
-    <div class="suggestions" v-if="suggestions.length > 0">
-      <div class="suggestion" v-for="s in suggestions" :key="s.id" @click="selectItem(s)">{{s.title}}
+    <div class="second">
+      <div class="heading">
+      <div class="circle">2</div>
+      <h2>Edit/Delete an Item</h2>
+      </div>
+      <div class="edit">
+        <div class="form">
+          <input v-model="findTitle" placeholder="Search by Author" id="searchBox">
+          <div class="suggestions" v-if="suggestions.length > 0">
+            <div class="suggestion" v-for="s in suggestions" :key="s.id" @click="selectItem(s)">{{s.title}}
+            </div>
+          </div>
+        </div>
+        <div class="edit-elements" v-if="findItem">
+          <div class="col1">
+            <input v-model="findItem.title" placeholder="Edited Title">
+            <p></p>
+            <input v-model="author" placeholder="Edited Name">
+            <p></p>
+            <textarea name="name" rows="4" cols="40" placeholder="Edited Comment" v-model="findItem.description"></textarea>
+            <div class="col2">
+              <img :src="findItem.path" />
+            </div>
+            <div class="actions" v-if="findItem">
+              <button @click="editItem(findItem)" id="editButton">Edit</button>
+              <button @click="deleteItem(findItem)">Delete</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
-  <div class="edit-elements" v-if="findItem">
-    <div class="col1">
-      <input v-model="findItem.title" placeholder="New Title">
-      <p></p>
-      <textarea name="name" rows="4" cols="40" placeholder="New Description" v-model="findItem.description"></textarea>
-
-      <div class="actions" v-if="findItem">
-        <button @click="editItem(findItem)" id="editButton">Edit</button>
-        <button @click="deleteItem(findItem)">Delete</button>
-      </div>
-    </div>
-
-    <div class="col2">
-      <img :src="findItem.path" />
-    </div>
-
-  </div>
-
 </div>
-</div>
+
+
 
 </template>
 
@@ -63,6 +72,7 @@ export default {
   data() {
     return {
       items: [],
+      author:"",
       title: "",
       description:"",
       file: null,
@@ -70,8 +80,10 @@ export default {
       selected: false,
       findItem: null,
       findTitle: "",
+      findAuthor:"",
       findDescription: "",
       editedTitle:"",
+      editedAuthor:"",
     }
   },
   created() {
@@ -88,6 +100,7 @@ export default {
       this.findTitle = "";
       this.findDescription = "";
       this.findItem = item;
+      this.findAuthor = "";
     },
     fileChanged(event) {
       this.file = event.target.files[0];
@@ -99,6 +112,7 @@ export default {
         let r1 = await axios.post('/api/photos', formData);
         let r2 = await axios.post('/api/items', {
           title: this.title,
+          author:this.author,
           description: this.description,
           path: r1.data.path
         });
@@ -122,6 +136,7 @@ export default {
       try {
         await axios.put("/api/items/" + item._id, {
           title: this.findItem.title,
+          author: this.findItem.author,
           description: this.findItem.description,
         });
         this.findItem = null;
@@ -171,10 +186,10 @@ export default {
 
 .circle {
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
+  width: 40px;
+  height: 40px;
   padding: 8px;
-  background: #333;
+  background:#ffbb00;
   color: #fff;
   text-align: center
 }
@@ -226,6 +241,19 @@ button {
 
 #editButton{
   margin-right: 10px;
+}
+
+.info{
+  display: flex;
+  flex-direction: row;
+}
+
+#searchBox{
+  margin-bottom: 10px;
+}
+
+#submit-button{
+  margin-top: 10px;
 }
 
 </style>

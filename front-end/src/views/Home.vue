@@ -1,11 +1,23 @@
 <template>
   <div class="home">
     <section class="image-gallery">
-      <div class="image" v-for="item in items" :key="item.id">
-        <h2>{{item.title}}</h2>
-        <h5>{{item.description}}</h5>
-        <img :src="item.path" />
-      </div>
+      <ul class="list-comments">
+        <li class="each-comments">
+          <div class="image" v-for="item in items" :key="item.id">
+            <div class="comment">
+              <div class="avatar">
+                <img :src="item.path" />
+              </div>
+              <div class="text-info">
+                <h2>{{item.title}}</h2>
+                <h5 id="author">Author: {{item.author}}</h5>
+                <h5>{{item.description}}</h5>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
     </section>
   </div>
 </template>
@@ -40,6 +52,27 @@ export default {
 
 <style scoped>
 .image h2 {
+}
+
+.list-comment{
+  list-style: none;
+  padding: 0;
+  list-style-type: none;
+  width:100%;
+}
+
+.each-comment{
+  display: flex;
+  flex-direction: column;
+}
+
+.comment{
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+}
+
+#author{
   font-style: italic;
 }
 
@@ -51,37 +84,19 @@ export default {
 }
 
 .image-gallery {
-  column-gap: 1.5em;
+  /* row-gap: 1.5em; */
 }
 
-.image {
+/* .image {
   margin: 0 0 1.5em;
-  display: inline-block;
-  width: 100%;
-}
+  /* display: inline-block; */
+  /* width: 100%;
+} */
 
 .image img {
-  width: 100%;
+  width: 20%;
 }
+/* } */
 
-/* Masonry on large screens */
-@media only screen and (min-width: 1024px) {
-  .image-gallery {
-    column-count: 4;
-  }
-}
 
-/* Masonry on medium-sized screens */
-@media only screen and (max-width: 1023px) and (min-width: 768px) {
-  .image-gallery {
-    column-count: 3;
-  }
-}
-
-/* Masonry on small screens */
-@media only screen and (max-width: 767px) and (min-width: 540px) {
-  .image-gallery {
-    column-count: 2;
-  }
-}
 </style>
