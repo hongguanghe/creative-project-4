@@ -2,16 +2,16 @@
   <div class="home">
     <section class="image-gallery">
       <ul class="list-comments">
-        <li class="each-comments">
-          <div class="image" v-for="item in items" :key="item.id">
+        <li class="each-comments" v-for="item in items" :key="item.id">
+          <div class="image">
             <div class="comment">
               <div class="avatar">
-                <img :src="item.path" />
+                <img :src="item.path" id="pic"/>
               </div>
               <div class="text-info">
-                <h2>{{item.title}}</h2>
-                <h5 id="author">Author: {{item.author}}</h5>
-                <h5>{{item.description}}</h5>
+                <p id="title">{{item.title}}</p>
+                <p id="author">by {{item.author}}</p>
+                <p id="description">{{item.description}}</p>
               </div>
             </div>
           </div>
@@ -51,37 +51,51 @@ export default {
 </script>
 
 <style scoped>
-.image h2 {
-}
 
-.list-comment{
+.list-comments{
   list-style: none;
   padding: 0;
   list-style-type: none;
   width:100%;
 }
 
-.each-comment{
+.each-comments{
   display: flex;
   flex-direction: column;
+  border-top: 1px solid #c2c2c2;
+  padding: 30px;
 }
 
 .comment{
   display: flex;
   flex-direction: row;
-  overflow: visible;
+}
+
+#title{
+  font-weight: bold;
+  font-size: 25px;
+  color:black;
+
 }
 
 #author{
   font-style: italic;
+  font-size: 15px;
+  color:black;
+
+}
+
+#description{
+  color:black;
+  font-size: 20px;
 }
 
 /* Masonry */
-*,
+/* *,
 *:before,
 *:after {
   box-sizing: inherit;
-}
+} */
 
 .image-gallery {
   /* row-gap: 1.5em; */
@@ -93,10 +107,14 @@ export default {
   /* width: 100%;
 } */
 
-.image img {
-  width: 20%;
-}
-/* } */
 
+#pic{
+  width: 200px;
+  height: 200px;
+}
+
+.text-info{
+  margin-left: 30px;
+}
 
 </style>
